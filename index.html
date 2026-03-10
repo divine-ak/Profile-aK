@@ -92,6 +92,7 @@
             background-clip: text;
             text-decoration: none;
             letter-spacing: 2px;
+            z-index: 1002;
         }
 
         .nav-links {
@@ -139,6 +140,7 @@
             font-size: 0.85rem;
             font-weight: 600;
             transition: all 0.3s ease;
+            z-index: 1002;
         }
 
         .nav-cta:hover {
@@ -146,13 +148,77 @@
             box-shadow: 0 10px 30px rgba(220, 20, 60, 0.4);
         }
 
-        /* Mobile Nav */
+        /* Mobile Menu Button */
         .mobile-menu-btn {
             display: none;
             background: none;
             border: none;
             color: white;
             cursor: pointer;
+            z-index: 1002;
+            padding: 8px;
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(5, 5, 5, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu-links {
+            list-style: none;
+            text-align: center;
+            transform: translateY(20px);
+            transition: transform 0.5s ease 0.1s;
+        }
+
+        .mobile-menu-overlay.active .mobile-menu-links {
+            transform: translateY(0);
+        }
+
+        .mobile-menu-links li {
+            margin: 24px 0;
+        }
+
+        .mobile-menu-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1.8rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .mobile-menu-links a:hover {
+            color: var(--crimson);
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 8px;
         }
 
         /* Particle Canvas */
@@ -813,7 +879,8 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .nav-links {
+            .nav-links,
+            .nav-cta {
                 display: none;
             }
 
@@ -864,6 +931,25 @@
     <!-- Particle Canvas -->
     <canvas id="particles-canvas"></canvas>
 
+    <!-- Mobile Menu Overlay (FIXED) -->
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <button class="mobile-menu-close" id="closeMenu">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <ul class="mobile-menu-links">
+            <li><a href="#home" class="mobile-link">Home</a></li>
+            <li><a href="#about" class="mobile-link">About</a></li>
+            <li><a href="#journey" class="mobile-link">Journey</a></li>
+            <li><a href="#mindset" class="mobile-link">Mindset</a></li>
+            <li><a href="#interests" class="mobile-link">Interests</a></li>
+            <li><a href="#dreams" class="mobile-link">Dreams</a></li>
+            <li><a href="#contact" class="mobile-link">Connect</a></li>
+        </ul>
+    </div>
+
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
@@ -878,7 +964,7 @@
                 <li><a href="#contact">Connect</a></li>
             </ul>
             <a href="#contact" class="nav-cta">Let's Talk</a>
-            <button class="mobile-menu-btn">
+            <button class="mobile-menu-btn" id="menuBtn">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="3" y1="6" x2="21" y2="6"></line>
                     <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -1598,6 +1684,47 @@
                     });
                 }
             });
+        });
+
+        // Mobile Menu Toggle (FIXED)
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeMenu = document.getElementById('closeMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function openMobileMenu() {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        menuBtn.addEventListener('click', openMobileMenu);
+        closeMenu.addEventListener('click', closeMobileMenu);
+
+        // Close menu when clicking a link
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    closeMobileMenu();
+                    setTimeout(() => {
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                    }, 300);
+                }
+            });
+        });
+
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                closeMobileMenu();
+            }
         });
     </script>
 </body>
