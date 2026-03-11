@@ -23,6 +23,17 @@
             --text-primary: #ffffff;
             --text-secondary: #a0a0a0;
             --text-muted: #666666;
+            --border-color: rgba(220, 20, 60, 0.15);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f5f5f5;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #555555;
+            --text-muted: #888888;
+            --border-color: rgba(220, 20, 60, 0.2);
         }
 
         html {
@@ -35,6 +46,7 @@
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease;
         }
 
         /* Scrollbar */
@@ -56,6 +68,47 @@
             color: white;
         }
 
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(17, 17, 17, 0.9);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="light"] .theme-toggle {
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            border-color: var(--crimson);
+            box-shadow: 0 5px 30px rgba(220, 20, 60, 0.3);
+        }
+
+        .theme-toggle svg {
+            width: 22px;
+            height: 22px;
+            color: var(--crimson);
+            transition: transform 0.5s ease;
+        }
+
+        .theme-toggle:hover svg {
+            transform: rotate(180deg);
+        }
+
         /* Navigation */
         .navbar {
             position: fixed;
@@ -74,6 +127,11 @@
             padding: 15px 0;
         }
 
+        [data-theme="light"] .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(220, 20, 60, 0.15);
+        }
+
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -86,7 +144,7 @@
         .nav-logo {
             font-size: 1.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #fff, var(--crimson-light), var(--crimson));
+            background: linear-gradient(135deg, var(--text-primary), var(--crimson-light), var(--crimson));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -153,7 +211,7 @@
             display: none;
             background: none;
             border: none;
-            color: white;
+            color: var(--text-primary);
             cursor: pointer;
             z-index: 1002;
             padding: 8px;
@@ -175,6 +233,10 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        [data-theme="light"] .mobile-menu-overlay {
+            background: rgba(245, 245, 245, 0.98);
         }
 
         .mobile-menu-overlay.active {
@@ -216,7 +278,7 @@
             right: 24px;
             background: none;
             border: none;
-            color: white;
+            color: var(--text-primary);
             cursor: pointer;
             padding: 8px;
         }
@@ -255,7 +317,7 @@
         .orb-1 {
             width: 400px;
             height: 400px;
-            background: rgba(220, 20, 60, 0.15);
+            background: rgba(220, 20, 60, 0.12);
             top: 10%;
             right: -100px;
             animation: orbFloat 8s ease-in-out infinite;
@@ -264,7 +326,7 @@
         .orb-2 {
             width: 300px;
             height: 300px;
-            background: rgba(139, 0, 0, 0.12);
+            background: rgba(139, 0, 0, 0.1);
             bottom: 20%;
             left: -80px;
             animation: orbFloat 10s ease-in-out infinite reverse;
@@ -286,23 +348,23 @@
         .ring-1 {
             width: 350px;
             height: 350px;
-            border-top: 1px solid rgba(220, 20, 60, 0.2);
-            border-right: 1px solid rgba(220, 20, 60, 0.1);
+            border-top: 1px solid rgba(220, 20, 60, 0.15);
+            border-right: 1px solid rgba(220, 20, 60, 0.08);
             animation: rotate 25s linear infinite;
         }
 
         .ring-2 {
             width: 500px;
             height: 500px;
-            border-bottom: 1px solid rgba(220, 20, 60, 0.15);
-            border-left: 1px solid rgba(220, 20, 60, 0.08);
+            border-bottom: 1px solid rgba(220, 20, 60, 0.12);
+            border-left: 1px solid rgba(220, 20, 60, 0.06);
             animation: rotate 35s linear infinite reverse;
         }
 
         .ring-3 {
             width: 650px;
             height: 650px;
-            border-top: 1px solid rgba(220, 20, 60, 0.1);
+            border-top: 1px solid rgba(220, 20, 60, 0.08);
             animation: rotate 45s linear infinite;
         }
 
@@ -321,8 +383,8 @@
 
         .hero-tagline {
             color: var(--crimson);
-            font-size: 0.85rem;
-            letter-spacing: 0.3em;
+            font-size: 0.75rem;
+            letter-spacing: 0.4em;
             text-transform: uppercase;
             margin-bottom: 24px;
             opacity: 0;
@@ -339,14 +401,14 @@
         }
 
         .hero-title .gradient {
-            background: linear-gradient(135deg, #fff 0%, var(--crimson-light) 50%, var(--crimson) 100%);
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--crimson-light) 50%, var(--crimson) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .hero-subtitle {
-            font-size: clamp(1.1rem, 3vw, 1.5rem);
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
             color: var(--text-secondary);
             margin-bottom: 12px;
             opacity: 0;
@@ -354,7 +416,7 @@
         }
 
         .hero-desc {
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: var(--text-muted);
             max-width: 500px;
             margin: 0 auto 40px;
@@ -395,7 +457,7 @@
 
         .btn-outline {
             border: 1px solid rgba(220, 20, 60, 0.5);
-            color: white;
+            color: var(--text-primary);
             background: transparent;
         }
 
@@ -450,8 +512,8 @@
 
         .section-label {
             color: var(--crimson);
-            font-size: 0.8rem;
-            letter-spacing: 0.2em;
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
             text-transform: uppercase;
             margin-bottom: 12px;
         }
@@ -481,22 +543,23 @@
             transform: translateY(0);
         }
 
-        /* About Section */
+        /* About Section - Justified Text */
         .about-content {
             max-width: 700px;
             margin: 0 auto;
-            text-align: center;
+            text-align: justify;
+            text-align-last:left;
         }
 
         .about-content p {
             color: var(--text-secondary);
-            font-size: 1.05rem;
-            line-height: 1.8;
+            font-size: 1rem;
+            line-height: 1.9;
             margin-bottom: 20px;
         }
 
         .about-content .highlight {
-            color: white;
+            color: var(--text-primary);
             font-weight: 500;
         }
 
@@ -518,7 +581,7 @@
             top: 0;
             bottom: 0;
             width: 1px;
-            background: linear-gradient(180deg, transparent, rgba(220, 20, 60, 0.3), transparent);
+            background: linear-gradient(180deg, transparent, rgba(220, 20, 60, 0.25), transparent);
             transform: translateX(-50%);
         }
 
@@ -558,18 +621,18 @@
             position: absolute;
             left: 50%;
             top: 8px;
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             background: var(--crimson);
             border-radius: 50%;
             transform: translateX(-50%);
-            border: 3px solid var(--bg-primary);
-            box-shadow: 0 0 20px rgba(220, 20, 60, 0.5);
+            border: 2px solid var(--bg-primary);
+            box-shadow: 0 0 15px rgba(220, 20, 60, 0.4);
         }
 
         .timeline-card {
-            background: rgba(17, 17, 17, 0.8);
-            border: 1px solid rgba(220, 20, 60, 0.15);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 24px;
             transition: all 0.4s ease;
@@ -577,14 +640,14 @@
 
         .timeline-card:hover {
             transform: translateY(-5px);
-            border-color: rgba(220, 20, 60, 0.4);
-            box-shadow: 0 20px 50px rgba(220, 20, 60, 0.15);
+            border-color: rgba(220, 20, 60, 0.3);
+            box-shadow: 0 15px 40px rgba(220, 20, 60, 0.1);
         }
 
         .timeline-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(220, 20, 60, 0.1);
+            width: 36px;
+            height: 36px;
+            background: rgba(220, 20, 60, 0.08);
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -597,30 +660,32 @@
         }
 
         .timeline-icon svg {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             color: var(--crimson);
         }
 
         .timeline-card h3 {
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin-bottom: 6px;
         }
 
         .timeline-card .year {
             color: var(--crimson);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 500;
             margin-bottom: 10px;
+            letter-spacing: 0.1em;
         }
 
         .timeline-card p {
             color: var(--text-secondary);
             font-size: 0.9rem;
             line-height: 1.6;
+            text-align: justify;
         }
 
-        /* Mindset & Interests - List with Separators */
+        /* Mindset Section - Justified Text */
         .list-section {
             max-width: 700px;
             margin: 0 auto;
@@ -630,14 +695,14 @@
             display: flex;
             align-items: flex-start;
             gap: 20px;
-            padding: 24px 0;
+            padding: 20px 0;
         }
 
         .list-icon {
-            width: 44px;
-            height: 44px;
-            background: rgba(220, 20, 60, 0.1);
-            border-radius: 12px;
+            width: 40px;
+            height: 40px;
+            background: rgba(220, 20, 60, 0.08);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -645,195 +710,141 @@
         }
 
         .list-icon svg {
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             color: var(--crimson);
         }
 
         .list-content h3 {
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin-bottom: 6px;
         }
 
         .list-content p {
             color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .list-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .list-tags span {
-            padding: 6px 14px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(220, 20, 60, 0.2);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            text-align: justify;
         }
 
         .separator {
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(220, 20, 60, 0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(220, 20, 60, 0.15), transparent);
         }
 
-        /* Dreams Section */
-        .dreams-grid {
+        /* Interests Section - Minimal */
+        .interests-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            max-width: 900px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
-        .dream-card {
-            background: rgba(17, 17, 17, 0.8);
-            border: 1px solid rgba(220, 20, 60, 0.15);
-            border-radius: 20px;
-            padding: 32px 24px;
-            text-align: center;
-            transition: all 0.4s ease;
-        }
-
-        .dream-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: rgba(220, 20, 60, 0.4);
-            box-shadow: 0 25px 60px rgba(220, 20, 60, 0.2);
-        }
-
-        .dream-icon {
-            width: 56px;
-            height: 56px;
-            background: rgba(220, 20, 60, 0.1);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            animation: pulseGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(220, 20, 60, 0.2); }
-            50% { box-shadow: 0 0 40px rgba(220, 20, 60, 0.4); }
-        }
-
-        .dream-icon svg {
-            width: 26px;
-            height: 26px;
-            color: var(--crimson);
-        }
-
-        .dream-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-        }
-
-        .dream-card p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        /* Philosophy Quote */
-        .philosophy {
-            max-width: 700px;
-            margin: 60px auto 0;
-        }
-
-        .quote-card {
-            background: rgba(17, 17, 17, 0.8);
-            border-left: 3px solid var(--crimson);
-            border-radius: 0 20px 20px 0;
-            padding: 32px;
-        }
-
-        .quote-card p {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.15rem;
-            font-style: italic;
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 16px;
-        }
-
-        .quote-card .author {
-            color: var(--crimson);
-            font-weight: 600;
-        }
-
-        /* Contact Section */
-        .contact-grid {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            flex-wrap: wrap;
-            margin-bottom: 40px;
-        }
-
-        .contact-card {
-            background: rgba(17, 17, 17, 0.8);
-            border: 1px solid rgba(220, 20, 60, 0.15);
-            border-radius: 16px;
-            padding: 28px 32px;
-            text-align: center;
-            text-decoration: none;
-            color: white;
-            transition: all 0.4s ease;
-            min-width: 140px;
-        }
-
-        .contact-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(220, 20, 60, 0.4);
-            box-shadow: 0 20px 50px rgba(220, 20, 60, 0.2);
-        }
-
-        .contact-card.email:hover {
-            border-color: #EA4335;
-            box-shadow: 0 20px 50px rgba(234, 67, 53, 0.2);
-        }
-
-        .contact-card.insta:hover {
-            border-color: #E4405F;
-            box-shadow: 0 20px 50px rgba(228, 64, 95, 0.2);
-        }
-
-        .contact-card.github:hover {
-            border-color: #fff;
-            box-shadow: 0 20px 50px rgba(255, 255, 255, 0.1);
-        }
-
-        .contact-icon {
-            width: 48px;
-            height: 48px;
+        .interest-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
+            padding: 20px 16px;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .interest-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(220, 20, 60, 0.3);
+            box-shadow: 0 15px 40px rgba(220, 20, 60, 0.1);
+        }
+
+        .interest-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(220, 20, 60, 0.08);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 12px;
         }
 
+        .interest-icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--crimson);
+        }
+
+        .interest-item h3 {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .contact-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 24px 28px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.4s ease;
+            min-width: 120px;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(220, 20, 60, 0.3);
+            box-shadow: 0 15px 40px rgba(220, 20, 60, 0.15);
+        }
+
+        .contact-card.email:hover {
+            border-color: #EA4335;
+            box-shadow: 0 15px 40px rgba(234, 67, 53, 0.15);
+        }
+
+        .contact-card.insta:hover {
+            border-color: #E4405F;
+            box-shadow: 0 15px 40px rgba(228, 64, 95, 0.15);
+        }
+
+        .contact-card.github:hover {
+            border-color: var(--text-primary);
+            box-shadow: 0 15px 40px rgba(128, 128, 128, 0.1);
+        }
+
+        .contact-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+        }
+
         .contact-card.email .contact-icon {
-            background: rgba(234, 67, 53, 0.1);
+            background: rgba(234, 67, 53, 0.08);
         }
 
         .contact-card.insta .contact-icon {
-            background: rgba(228, 64, 95, 0.1);
+            background: rgba(228, 64, 95, 0.08);
         }
 
         .contact-card.github .contact-icon {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(128, 128, 128, 0.08);
         }
 
         .contact-icon svg {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
         }
 
         .contact-card.email .contact-icon svg {
@@ -845,11 +856,11 @@
         }
 
         .contact-card.github .contact-icon svg {
-            color: #fff;
+            color: var(--text-primary);
         }
 
         .contact-card span {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
         }
 
@@ -860,13 +871,13 @@
         /* Footer */
         footer {
             padding: 40px 0;
-            border-top: 1px solid rgba(220, 20, 60, 0.1);
+            border-top: 1px solid var(--border-color);
             text-align: center;
         }
 
         footer p {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             margin-bottom: 12px;
         }
 
@@ -874,7 +885,7 @@
             font-family: 'Playfair Display', serif;
             font-style: italic;
             color: var(--crimson);
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         /* Responsive */
@@ -923,15 +934,41 @@
             section {
                 padding: 60px 0;
             }
+
+            .theme-toggle {
+                bottom: 20px;
+                right: 20px;
+                width: 44px;
+                height: 44px;
+            }
         }
     </style>
+    <base target="_blank">
 <base target="_blank">
 </head>
 <body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg id="sunIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg id="moonIcon" style="display: none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </button>
+
     <!-- Particle Canvas -->
     <canvas id="particles-canvas"></canvas>
 
-    <!-- Mobile Menu Overlay (FIXED) -->
+    <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobileMenu">
         <button class="mobile-menu-close" id="closeMenu">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -945,7 +982,6 @@
             <li><a href="#journey" class="mobile-link">Journey</a></li>
             <li><a href="#mindset" class="mobile-link">Mindset</a></li>
             <li><a href="#interests" class="mobile-link">Interests</a></li>
-            <li><a href="#dreams" class="mobile-link">Dreams</a></li>
             <li><a href="#contact" class="mobile-link">Connect</a></li>
         </ul>
     </div>
@@ -960,7 +996,6 @@
                 <li><a href="#journey">Journey</a></li>
                 <li><a href="#mindset">Mindset</a></li>
                 <li><a href="#interests">Interests</a></li>
-                <li><a href="#dreams">Dreams</a></li>
                 <li><a href="#contact">Connect</a></li>
             </ul>
             <a href="#contact" class="nav-cta">Let's Talk</a>
@@ -984,17 +1019,17 @@
         
         <div class="hero-content">
             <p class="hero-tagline">Welcome to my world</p>
-            <h1 class="hero-title"><span class="gradient">Hii I'm Anand</span></h1>
-            <p class="hero-subtitle">Chemistry Student & Aspiring Developer</p>
-            <p class="hero-desc">Building my path through atoms and algorithms. Not following the crowd, creating my own journey.</p>
-            <div class="hero-buttons">
+            <h1 class="hero-title"><span class="gradient">hiii i'm Anand</span></h1>
+            <p class="hero-subtitle">Student • Aspiring Developer • Dreamer</p>
+            <p class="hero-desc">Learning, Building, Evolving</p>
+             <div class="hero-buttons"></div>
                 <a href="#journey" class="btn btn-primary">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                     </svg>
-                    Explore My Journey
+                    Explore
                 </a>
-                <a href="#contact" class="btn btn-outline">Get in Touch</a>
+                <a href="#contact" class="btn btn-outline">Connect</a>
             </div>
         </div>
         
@@ -1006,20 +1041,19 @@
     </section>
 
     <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <div class="section-header reveal">
-                <p class="section-label">About Me</p>
-                <h2 class="section-title">Who <span class="gradient">I Am</span></h2>
-            </div>
-            <div class="about-content">
-                <p class="reveal">I'm <span class="highlight">Anand Kumar</span>, currently pursuing <span class="highlight">B.Sc. Chemistry (Honors)</span> at BN College, TMBU Bhagalpur, Bihar.</p>
-                <p class="reveal">Alongside my academic journey, I've been teaching myself web development with AI as my mentor. I believe in creating my own path rather than following conventional routes.</p>
-                <p class="reveal">Since 2023, I've been associated with <span class="company">Medicolife Pvt. Ltd.</span>, contributing to data management, HR coordination, and design operations while completing my graduation.</p>
-                <p class="reveal" style="color: var(--text-muted);">My foundation: Divine Happy School (10th CBSE) → MLJ College (12th BSEB) → Now balancing atoms and algorithms.</p>
-            </div>
+<section id="about">
+    <div class="container">
+        <div class="section-header reveal">
+            <p class="section-label">About Me</p>
+            <h2 class="section-title">Who <span class="gradient">I Am</span></h2>
         </div>
-    </section>
+        <div class="about-content" style="text-align: left;">
+            <p class="reveal">I'm <span class="highlight">Anand Kumar</span>, pursuing <span class="highlight">B.Sc. Chemistry (Honors)</span> at BN College, TMBU, Bhagalpur.</p>
+            <p class="reveal">Self-teaching web development with AI as my mentor. Learning by building, experimenting, and breaking things.</p>
+            <p class="reveal">Since 2023, working with <span class="company">Medicolife Pvt. Ltd.</span> on data management, HR coordination, and design while completing graduation.</p>
+        </div>
+    </div>
+</section>
 
     <!-- Journey Section -->
     <section id="journey">
@@ -1060,9 +1094,9 @@
                                     <line x1="12" y1="16" x2="12.01" y2="16"></line>
                                 </svg>
                             </div>
-                            <h3>The Shift</h3>
+                            <h3>Higher Education</h3>
                             <p class="year">11th - 12th</p>
-                            <p>MLJ College, Bhagalpur (Bihar Board). Learned adaptability and resilience.</p>
+                            <p>MLJ College, Bhagalpur. Learned adaptability and resilience.</p>
                         </div>
                     </div>
                     <div class="timeline-year"></div>
@@ -1146,7 +1180,7 @@
                             </div>
                             <h3>Future Goals</h3>
                             <p class="year">Vision</p>
-                            <p>Financial freedom, gaming paradise, world travel — all on my own terms.</p>
+                            <p>Full Stack Web Developer.</p>
                         </div>
                     </div>
                     <div class="timeline-year"></div>
@@ -1199,7 +1233,7 @@
                     </div>
                     <div class="list-content">
                         <h3>Adaptability</h3>
-                        <p>CBSE to BSEB, chemistry to development. I thrive in change and uncertainty.</p>
+                        <p>CBSE to BSEB, Chemistry to Development. I thrive in change and uncertainty.</p>
                     </div>
                 </div>
                 <div class="separator reveal"></div>
@@ -1257,16 +1291,16 @@
         </div>
     </section>
 
-    <!-- Interests Section -->
+    <!-- Interests Section - Minimal -->
     <section id="interests">
         <div class="container">
             <div class="section-header reveal">
                 <p class="section-label">Beyond Code</p>
                 <h2 class="section-title">What <span class="gradient">Fuels Me</span></h2>
             </div>
-            <div class="list-section">
-                <div class="list-item reveal">
-                    <div class="list-icon">
+            <div class="interests-grid">
+                <div class="interest-item reveal">
+                    <div class="interest-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <line x1="6" y1="12" x2="10" y2="12"></line>
                             <line x1="8" y1="10" x2="8" y2="14"></line>
@@ -1275,20 +1309,11 @@
                             <rect x="2" y="6" width="20" height="12" rx="2"></rect>
                         </svg>
                     </div>
-                    <div class="list-content">
-                        <h3>Gaming</h3>
-                        <div class="list-tags">
-                            <span>GTA Series</span>
-                            <span>Assassin's Creed</span>
-                            <span>Sleeping Dogs</span>
-                            <span>Dreaming of RGB battlestation</span>
-                        </div>
-                    </div>
+                    <h3>Gaming</h3>
                 </div>
-                <div class="separator reveal"></div>
-                
-                <div class="list-item reveal">
-                    <div class="list-icon">
+
+                <div class="interest-item reveal">
+                    <div class="interest-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
                             <line x1="7" y1="2" x2="7" y2="22"></line>
@@ -1300,78 +1325,42 @@
                             <line x1="17" y1="7" x2="22" y2="7"></line>
                         </svg>
                     </div>
-                    <div class="list-content">
-                        <h3>Entertainment</h3>
-                        <div class="list-tags">
-                            <span>Marvel Universe</span>
-                            <span>The Flash (CW)</span>
-                            <span>Jujutsu Kaisen</span>
-                            <span>Everything except horror</span>
-                        </div>
-                    </div>
+                    <h3>Movies & Series</h3>
                 </div>
-                <div class="separator reveal"></div>
-                
-                <div class="list-item reveal">
-                    <div class="list-icon">
+
+                <div class="interest-item reveal">
+                    <div class="interest-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
                             <polyline points="14 2 14 8 20 8"></polyline>
                         </svg>
                     </div>
-                    <div class="list-content">
-                        <h3>Aesthetics</h3>
-                        <div class="list-tags">
-                            <span>Katanas & Precision</span>
-                            <span>Sports Cars</span>
-                            <span>Clean Design</span>
-                            <span>Gojo's Philosophy</span>
-                        </div>
-                    </div>
+                    <h3>Aesthetics</h3>
                 </div>
-                <div class="separator reveal"></div>
-                
-                <div class="list-item reveal">
-                    <div class="list-icon">
+
+                <div class="interest-item reveal">
+                    <div class="interest-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"></circle>
                             <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
                         </svg>
                     </div>
-                    <div class="list-content">
-                        <h3>Wanderlust</h3>
-                        <div class="list-tags">
-                            <span>Digital Nomad Dreams</span>
-                            <span>Cultural Exploration</span>
-                            <span>Mountain Landscapes</span>
-                            <span>World Cuisines</span>
-                        </div>
-                    </div>
+                    <h3>Wanderlust</h3>
                 </div>
-                <div class="separator reveal"></div>
-                
-                <div class="list-item reveal">
-                    <div class="list-icon">
+
+                <div class="interest-item reveal">
+                    <div class="interest-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M9 18V5l12-2v13"></path>
                             <circle cx="6" cy="18" r="3"></circle>
                             <circle cx="18" cy="16" r="3"></circle>
                         </svg>
                     </div>
-                    <div class="list-content">
-                        <h3>Musical Ambition</h3>
-                        <div class="list-tags">
-                            <span>Guitar (to learn)</span>
-                            <span>Violin (to learn)</span>
-                            <span>Piano (to learn)</span>
-                            <span>Music as Expression</span>
-                        </div>
-                    </div>
+                    <h3>Music</h3>
                 </div>
-                <div class="separator reveal"></div>
-                
-                <div class="list-item reveal">
-                    <div class="list-icon">
+
+                <div class="interest-item reveal">
+                    <div class="interest-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path>
                             <path d="M8.5 8.5v.01"></path>
@@ -1381,112 +1370,7 @@
                             <path d="M7 14v.01"></path>
                         </svg>
                     </div>
-                    <div class="list-content">
-                        <h3>Tech & AI</h3>
-                        <div class="list-tags">
-                            <span>Always Testing New Tools</span>
-                            <span>ChatGPT & Claude</span>
-                            <span>Future Gadgets</span>
-                            <span>Innovation</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Dreams Section -->
-    <section id="dreams">
-        <div class="container">
-            <div class="section-header reveal">
-                <p class="section-label">Vision</p>
-                <h2 class="section-title">What I'm <span class="gradient">Building</span></h2>
-            </div>
-            <div class="dreams-grid">
-                <div class="dream-card reveal">
-                    <div class="dream-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="6" y1="12" x2="10" y2="12"></line>
-                            <line x1="8" y1="10" x2="8" y2="14"></line>
-                            <line x1="15" y1="13" x2="15.01" y2="13"></line>
-                            <line x1="18" y1="11" x2="18.01" y2="11"></line>
-                            <rect x="2" y="6" width="20" height="12" rx="2"></rect>
-                        </svg>
-                    </div>
-                    <h3>Gaming Paradise</h3>
-                    <p>High-end PC, dual 4K monitors, RGB glory, dedicated gaming room</p>
-                </div>
-                
-                <div class="dream-card reveal">
-                    <div class="dream-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
-                        </svg>
-                    </div>
-                    <h3>Global Explorer</h3>
-                    <p>Remote work while traveling — experiencing cultures and cuisines</p>
-                </div>
-                
-                <div class="dream-card reveal">
-                    <div class="dream-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="22" y1="12" x2="2" y2="12"></line>
-                            <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
-                            <line x1="6" y1="16" x2="6.01" y2="16"></line>
-                            <line x1="10" y1="16" x2="10.01" y2="16"></line>
-                        </svg>
-                    </div>
-                    <h3>Lifestyle Freedom</h3>
-                    <p>Modern home, financial independence, zero constraints</p>
-                </div>
-                
-                <div class="dream-card reveal">
-                    <div class="dream-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
-                            <rect x="9" y="9" width="6" height="6"></rect>
-                            <line x1="9" y1="1" x2="9" y2="4"></line>
-                            <line x1="15" y1="1" x2="15" y2="4"></line>
-                            <line x1="9" y1="20" x2="9" y2="23"></line>
-                            <line x1="15" y1="20" x2="15" y2="23"></line>
-                            <line x1="20" y1="9" x2="23" y2="9"></line>
-                            <line x1="20" y1="14" x2="23" y2="14"></line>
-                            <line x1="1" y1="9" x2="4" y2="9"></line>
-                            <line x1="1" y1="14" x2="4" y2="14"></line>
-                        </svg>
-                    </div>
-                    <h3>Multiple Streams</h3>
-                    <p>Passive income sources, invest in passions, support family</p>
-                </div>
-                
-                <div class="dream-card reveal">
-                    <div class="dream-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 18V5l12-2v13"></path>
-                            <circle cx="6" cy="18" r="3"></circle>
-                            <circle cx="18" cy="16" r="3"></circle>
-                        </svg>
-                    </div>
-                    <h3>Musical Mastery</h3>
-                    <p>Learn guitar, violin, piano — express through music</p>
-                </div>
-                
-                <div class="dream-card reveal">
-                    <div class="dream-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                        </svg>
-                    </div>
-                    <h3>Dream Machine</h3>
-                    <p>Own a sports car — speed, design, pure adrenaline</p>
-                </div>
-            </div>
-
-            <div class="philosophy reveal">
-                <div class="quote-card">
-                    <p>"I don't chase job titles — I chase a life of freedom, comfort, and purpose. The tools may change, but the destination remains: a life designed on my own terms."</p>
-                    <span class="author">— Anand</span>
+                    <h3>Tech & AI</h3>
                 </div>
             </div>
         </div>
@@ -1498,7 +1382,6 @@
             <div class="section-header reveal">
                 <p class="section-label">Get in Touch</p>
                 <h2 class="section-title">Let's <span class="gradient">Connect</span></h2>
-                <p style="color: var(--text-secondary); margin-top: 16px;">Open to conversations, collaborations, and opportunities</p>
             </div>
             
             <div class="contact-grid">
@@ -1548,12 +1431,44 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>© 2025 Anand Kumar. Crafted with passion.</p>
+            <p>© 2025 Anand Kumar.</p>
             <p class="quote">"Throughout Heaven and Earth... I Alone Am the Honored One"</p>
         </div>
     </footer>
 
     <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+        const html = document.documentElement;
+
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            html.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            if (theme === 'light') {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+        }
+
         // Particle System
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
@@ -1568,21 +1483,24 @@
         
         function createParticles() {
             particles = [];
-            const count = Math.min(40, Math.floor(window.innerWidth / 40));
+            const count = Math.min(35, Math.floor(window.innerWidth / 45));
             for (let i = 0; i < count; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.4,
-                    vy: (Math.random() - 0.5) * 0.4,
-                    size: Math.random() * 2 + 1,
-                    alpha: Math.random() * 0.5 + 0.2
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3,
+                    size: Math.random() * 2 + 0.5,
+                    alpha: Math.random() * 0.4 + 0.1
                 });
             }
         }
         
         function drawParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const isLight = html.getAttribute('data-theme') === 'light';
+            const particleColor = isLight ? '200, 20, 60' : '220, 20, 60';
             
             particles.forEach((p, i) => {
                 p.x += p.vx;
@@ -1593,7 +1511,7 @@
                 
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(220, 20, 60, ${p.alpha})`;
+                ctx.fillStyle = `rgba(${particleColor}, ${p.alpha})`;
                 ctx.fill();
                 
                 // Connect nearby particles
@@ -1602,11 +1520,11 @@
                     const dy = p.y - p2.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
                     
-                    if (dist < 120) {
+                    if (dist < 100) {
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = `rgba(220, 20, 60, ${0.08 * (1 - dist / 120)})`;
+                        ctx.strokeStyle = `rgba(${particleColor}, ${0.06 * (1 - dist / 100)})`;
                         ctx.stroke();
                     }
                 });
@@ -1686,7 +1604,7 @@
             });
         });
 
-        // Mobile Menu Toggle (FIXED)
+        // Mobile Menu Toggle
         const menuBtn = document.getElementById('menuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
         const closeMenu = document.getElementById('closeMenu');
@@ -1705,7 +1623,6 @@
         menuBtn.addEventListener('click', openMobileMenu);
         closeMenu.addEventListener('click', closeMobileMenu);
 
-        // Close menu when clicking a link
         mobileLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -1720,7 +1637,6 @@
             });
         });
 
-        // Close on escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
                 closeMobileMenu();
